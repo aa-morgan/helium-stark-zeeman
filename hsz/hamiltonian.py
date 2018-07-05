@@ -7,8 +7,8 @@ Created on Wed 04 Jul 2017
 from operator import attrgetter
 import numpy as np
 from tqdm import trange
-from .basis import State, Basis, basis_states
-from .interaction_matrix import interaction_matrix
+from .basis import State, Basis, basis_states, get_qd, energy
+from .interaction_matrix import Interaction_matrix, stark_interaction, zeeman_interaction
 from .constants import *
 
 class Hamiltonian(object):
@@ -72,7 +72,7 @@ class Hamiltonian(object):
                 Bfield=0.0       dtype: float     units: T
             
             kwargs:
-                field_angle=0.0    dtype: [float]
+                field_angle=0.0  dtype: [float]
 
                                  specifies the angle between the electric and magnetic fields.
                                  
@@ -95,17 +95,15 @@ class Hamiltonian(object):
         eig_val = np.empty((num_fields, self.num_states), dtype=float)
         if get_eig_vec:
             eig_vec = np.empty((num_fields, self.num_states, self.num_states), dtype=float)
-        elif get_eig_vec_elements is not None:
-            eig_vec_elements = []
         # optional magnetic field
         if Bfield != 0.0:
             Bz = mu_B * Bfield / En_h
-            self._zeeman_matrix = interaction_matrix(matrix_type='zeeman', basis=self.basis, **kwargs)
+            self._zeeman_matrix = Interaction_matrix(matrix_type='zeeman', basis=self.basis, **kwargs)
             H_Z = Bz * self._zeeman_matrix.matrix
         else:
             H_Z = 0.0
         # loop over electric field values
-        self._stark_matrix = interaction_matrix(matrix_type='stark', basis=self.basis, **kwargs)
+        self._stark_matrix = Interaction_matrix(matrix_type='stark', basis=self.basis, **kwargs)
         for i in trange(num_fields, desc="diagonalise Hamiltonian", **tqdm_kwargs):
             Fz = Efield[i] * e * a_0 / En_h
             H_S = Fz * self._stark_matrix.matrix / mu_me
@@ -131,6 +129,10 @@ class Hamiltonian(object):
                 Efield=0.0       dtype: float     units: V / m
             
             kwargs:
+                field_angle=0.0  dtype: [float]
+
+                                 specifies the angle between the electric and magnetic fields.
+                                 
                 eig_vec=False    dtype: bool
 
                                  returns the eigenvalues and eigenvectors for 
@@ -140,7 +142,6 @@ class Hamiltonian(object):
         """
         tqdm_kwargs = dict([(x.replace('tqdm_', ''), kwargs[x]) for x in kwargs.keys() if 'tqdm_' in x])
         get_eig_vec = kwargs.get('eig_vec', False)
-        get_eig_vec_elements = kwargs.get('eig_vec_elements', None)
         num_fields = len(Bfield)
         # initialise output arrays
         eig_val = np.empty((num_fields, self.num_states), dtype=float)
@@ -149,12 +150,12 @@ class Hamiltonian(object):
         # optional electric field
         if Efield != 0.0:
             Fz = Efield * e * a_0 / En_h
-            self._stark_matrix = interaction_matrix(matrix_type='stark', basis=self.basis, **kwargs)
+            self._stark_matrix = Interaction_matrix(matrix_type='stark', basis=self.basis, **kwargs)
             H_S = Fz * self._stark_matrix.matrix / mu_me
         else:
             H_S = 0.0
         # loop over magnetic field values
-        self._zeeman_matrix = interaction_matrix(matrix_type='zeeman', basis=self.basis, **kwargs)
+        self._zeeman_matrix = Interaction_matrix(matrix_type='zeeman', basis=self.basis, **kwargs)
         for i in trange(num_fields, desc="diagonalise Hamiltonian", **tqdm_kwargs):
             Bz = mu_B * Bfield[i] / En_h
             H_Z =  Bz * self._zeeman_matrix.matrix 

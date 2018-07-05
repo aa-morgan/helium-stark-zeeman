@@ -11,6 +11,6 @@ setup(name='hsz',
         install_requires=[
             'tqdm',
             'attrs'
-        ]
+        ],
         include_package_data=True,
         zip_safe=False)
