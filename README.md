@@ -15,9 +15,9 @@ Install
 Install using setuptools (requirements below).
 
 ```bash
-   git clone https://github.com/axm108/helium-stark-zeeman
-   cd helium-stark-zeeman
-   python setup.py install
+git clone https://github.com/axm108/helium-stark-zeeman
+cd helium-stark-zeeman
+python setup.py install
 ```
 
 Basic usage
@@ -36,8 +36,8 @@ Calculate Stark map,
 ```python
 Efield = np.linspace(0.0, 1000.0, 101) # V /m
 sm = ham.stark_map(Efield,
-								Bfield=0.1, # Telsa
-								field_angle=0.0, # Degrees
+                                Bfield=0.1, # Telsa
+                                field_angle=0.0, # Degrees
 ```
 Plot Stark map,
 ```python
@@ -56,7 +56,7 @@ Parameters
 | n_max | Maximum value of the principle quantum number n, to allow in the basis. | Int | Yes | N/A |
 | L_max | Maximum value of the orbital angular momentum quantum number to allow in the basis. None means no restriction. | Int [or None] | No | None |
 | S | Value of the total spin orbital angular momentum. [Singlet: S=0, Triplet: S=1]. None means both.  | Int [or None] | No | None |
-| M | Single value of the azimuthal quantum number to use in the basis. None means no restriction. | Int | No | None |
+| M | Single value of the azimuthal quantum number to use in the basis. None means no restriction. | Int [or None] | No | None |
 | M_max | Maximum value of the azimuthal quantum number to allow in the basis. None means no restriction. | Int [or None] | No | None |
 | basis_type | Whether to use the n, L, S, M_L, or n, L, S, J, M_J basis. Specify using 'ML', and 'MJ, respectively. | String | No | 'ML' |
 
@@ -76,16 +76,16 @@ Parameters
 Version information
 -------------------
 
-===================  =======================================
-Python               3.6.1 64bit [GCC 4.2.1 Compatible Apple LLVM 6.0 (clang-600.0.57)]
-IPython              5.3.0
-OS                   Darwin 17.4.0 x86_64 i386 64bit
-attr                 17.4.0
-matplotlib           2.0.2
-numba                0.35.0
-numpy                1.14.3
-scipy                1.00.0
-sympy                1.0
-tqdm                 4.15.0
-version_information  1.0.3
-===================  =======================================
+| Library  | Version |
+| ------------ | ------------ |
+| Python  | 3.6.1 64bit [GCC 4.2.1 Compatible Apple LLVM 6.0 (clang-600.0.57)] |
+| IPython | 5.3.0 |
+| OS | Darwin 17.4.0 x86_64 i386 64bit |
+| attr | 17.4.0 |
+| matplotlib | 2.0.2 |
+| numba | 0.35.0 |
+| numpy | 1.14.3 |
+| scipy | 1.00.0 |
+| sympy | 1.0 |
+| tqdm | 4.15.0 |
+| version_information | 1.0.3 |
