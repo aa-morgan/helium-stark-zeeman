@@ -12,8 +12,7 @@ http://dx.doi.org/10.1103/PhysRevA.20.2251
 Install
 -------
 
-Install using setuptools (requirements below).
-
+Install using setuptools,
 ```bash
 git clone https://github.com/axm108/helium-stark-zeeman
 cd helium-stark-zeeman
@@ -36,8 +35,8 @@ Calculate Stark map,
 ```python
 Efield = np.linspace(0.0, 1000.0, 101) # V /m
 sm = ham.stark_map(Efield,
-                                Bfield=0.1, # Telsa
-                                field_angle=0.0, # Degrees
+                   Bfield=0.1, # Telsa
+                   field_angle=0.0, # Degrees
 ```
 Plot Stark map,
 ```python
@@ -65,6 +64,19 @@ Parameters
 | ------------ | ------------ | ------------ | ------------ | ------------ |
 | Efield  | Electric field values in V/cm | numpy.array | Yes  | N/A |
 | Bfield  | Magnetic field values in T  | Float  | No  | 0.0 |
+| field_angle | Angle between electric and magnetic fields | Float | No | 0.0 |
+| cache_matrices | Cache Stark and Zeeman matrices | Boolean | No | True |
+| load_matrices | Load Stark and Zeeman matrices from .npz files | Boolean | No | False |
+| save_matrices | Save Stark and Zeeman matrices to .npz files | Boolean | No | False |
+| matrices_dir | Directory to save Stark and Zeeman matrices | String | No | './' |
+| eig_vec | Return eigenvectors | Boolean | No | False |
+| tqdm_disable | Disable tqdm output | Boolean | No | False |
+
+#### Method: zeeman_map
+| Parameter  | Description | Data type | Required | Default |
+| ------------ | ------------ | ------------ | ------------ | ------------ |
+| Bfield  | Magnetic field values in T | numpy.array | Yes  | N/A |
+| Efield  | Electric field values in V/cm  | Float  | No  | 0.0 |
 | field_angle | Angle between electric and magnetic fields | Float | No | 0.0 |
 | cache_matrices | Cache Stark and Zeeman matrices | Boolean | No | True |
 | load_matrices | Load Stark and Zeeman matrices from .npz files | Boolean | No | False |

@@ -4,4 +4,4 @@
 build/*
 dist/*
 *.egg-info*
-
+notebooks/saved_matrices/*
