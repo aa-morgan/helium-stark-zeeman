@@ -1,4 +1,4 @@
-Helium Stark Zeeman
+`Helium Stark Zeeman`
 ===============
 
 Calculate Stark and Zeeman maps for Rydberg helium, in either the `n, L, S, M_L` or `n, L, S, J, M_J` basis, using the
