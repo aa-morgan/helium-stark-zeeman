@@ -12,7 +12,7 @@ from sympy.physics.wigner import clebsch_gordan, wigner_3j, wigner_6j
 from .constants import *
 import time
 
-class Interaction_matrix:
+class InteractionMatrix:
     """
     """
     def __init__(self, matrix_type, basis, **kwargs):
@@ -55,7 +55,7 @@ class Interaction_matrix:
             raise Exception("Interaction term '{}' is not recognised!".format(self.type))  
     
     def save_matrix(self, **kwargs):
-        filename =  '{}_{}'.format(self.type, self.filename())
+        filename = str(self)
         if self.type == 'stark':
             filename += '_angle={}'.format(kwargs.get('field_angle', 0.0))
         save_dir = os.path.join('.', kwargs.get('matrices_dir', ''))
@@ -64,34 +64,32 @@ class Interaction_matrix:
         date = time.strftime("%b %d %Y %H:%M:%S", time.gmtime(time.time()))
         np.savez_compressed(os.path.join(save_dir, filename), 
                             matrix=self.matrix, date=date, params=self.basis.params)
-        print("Saved '{}' matrix from, ".format(self.type))
-        print('\t', os.path.join(save_dir, filename))
+        print("Saved '{}' matrix to, ".format(self.type))
+        print('\t', os.path.join(save_dir, '{}.{}'.format(filename, 'npz')))
 
     def load_matrix(self, **kwargs):
-        filename = '{}_{}'.format(self.type, self.filename())
+        filename = str(self)
         if self.type == 'stark':
             filename += '_angle={}'.format(kwargs.get('field_angle', 0.0))
         filename += '.npz'
         load_dir = os.path.join('.', kwargs.get('matrices_dir', ''))
         mat = np.load(os.path.join(load_dir, filename))
         print("Loaded '{}' matrix from, ".format(self.type))
-        print('\t', os.path.join(load_dir, filename))
+        print('\t', os.path.join(load_dir, '{}.{}'.format(filename, 'npz')))
         return mat
 
     def check_matrix(self, **kwargs):
-        filename = '{}_{}'.format(self.type, self.filename())
+        filename = str(self)
         if self.type == 'stark':
             filename += '_angle={}'.format(kwargs.get('field_angle', 0.0))
         filename += '.npz'
         load_dir = os.path.join('.', kwargs.get('matrices_dir', ''))
         return os.path.isfile(os.path.join(load_dir, filename))
     
-    def filename(self):
-        return 'n={}-{}_L_max={}_S={}_M={}_M_max={}_basis={}'.format(
-            self.basis.params.n_min, self.basis.params.n_max, 
-            self.basis.params.L_max, self.basis.params.S,
-            self.basis.params.M, self.basis.params.M_max,
-            self.basis.params.basis_type)
+    def __str__(self):
+        """ To String method
+        """
+        return '{}__{}'.format(self.type, self.basis)
     
 ############################
 ### Stark effect methods ###

@@ -1,6 +1,6 @@
 # coding: utf-8
 
-from hsfs import Hamiltonian
+from hsfs import HamiltonianMatrix
 import numpy as np
 import os
 
@@ -16,7 +16,7 @@ _Bfield=0.1
 _matrices_dir='saved_matrices'
 
 print(('n_min={}, n_max={}, S={}').format(_n_min, _n_max, _S))
-ham0 = Hamiltonian(n_min=_n_min, n_max=_n_max, S=_S)
+ham0 = HamiltonianMatrix(n_min=_n_min, n_max=_n_max, S=_S)
 print('Number of basis states:', '%d'%ham0.num_states)
 
 Efield = np.linspace(_Efield, _Efield, 1) # V /cm

@@ -20,19 +20,21 @@ a_0 = hbar/ (m_e * c * alpha)
 mu_B = e * hbar / (2.0 * m_e)
 
 ## helium
-A_r_helium = 4.002603254130
-ionization_helium = 1.9831066637e7
-mass_helium = A_r_helium * m_u
-mass_helium_core = mass_helium - m_e + ionization_helium * h /c
+A_r_He = 4.002603254130
+ionization_He = 1.9831066637e7
+mass_He = A_r_He * m_u
+mass_He_core = mass_He - m_e + ionization_He * h /c
 ## reduced electron mass/ m_e
-mu_me = mass_helium_core / (mass_helium_core + m_e)
+mu_me = mass_He_core / (mass_He_core + m_e)
 ## reduced electron mass / core mass,
-mu_M = m_e / (mass_helium_core + m_e)
+mu_M = m_e / (mass_He_core + m_e)
 ## Rydberg constant for helium
-Ry_M = Ry * mu_me
+Ry_He = Ry * mu_me
 ## g-factors
-g_L = 1 - m_e / mass_helium_core
+g_L = 1 - m_e / mass_He_core
 g_s = 2.00231930436182
+## Hartree energy for helium
+En_h_He = 2*Ry_He*h*c;
 
 def constants_info():
     constant_vals = {
@@ -46,13 +48,13 @@ def constants_info():
         'Hatree energy': En_h,
         'Bohr radius, $a_0$': a_0,
         'Bohr magneton, $\mu_B$': mu_B,
-        'ionization energy of helium': ionization_helium,
+        'ionization energy of helium': ionization_He,
         'mass of helium': mass_helium,
-        'mass of helium (a.u.)': A_r_helium,
-        'mass of helium core': mass_helium_core,
+        'mass of helium (a.u.)': A_r_He,
+        'mass of helium core': mass_He_core,
         'Reduced electron mass / electron mass': mu_me,
         'Reduced electron mass / core mass': mu_M,
-        'Rydberg constant for helium': Ry_M
+        'Rydberg constant for helium': Ry_He
     }
     df = pd.DataFrame(list(constant_vals.items()), columns=['Constant', 'Value'])
     df['Value'] = df['Value'].map('{:.14g}'.format)
