@@ -12,7 +12,7 @@ Install
 
 Install using `setuptools`,
 ```bash
-git clone https://github.com/axm108/helium-stark-zeeman
+git clone https://github.com/aa-morgan/helium-stark-zeeman
 cd helium-stark-zeeman
 python setup.py install
 ```
